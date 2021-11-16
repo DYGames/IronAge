@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class HPController : MonoBehaviour
 {
-    public int MaxHP;
+    private int _MaxHP;
+    public int MaxHP
+    {
+        get
+        {
+            return _MaxHP;
+        }
+        set
+        {
+            _MaxHP = value;
+            HP = value;
+        }
+    }
     private int _HP;
     public int HP
     {
@@ -15,8 +27,21 @@ public class HPController : MonoBehaviour
         set
         {
             _HP = value;
-            HPBar.localScale = new Vector3(_HP / MaxHP, 1, 1);
+            if (_HP <= 0)
+                _HP = 0;
+            HPBar.localScale = new Vector3(1, 1, (float)_HP / MaxHP);
+            if (_HP == 0)
+                gameObject.SendMessage("Destroy");
         }
     }
     public Transform HPBar;
+
+    public IEnumerator Start()
+    {
+        while(true)
+        {
+            HPBar.transform.parent.rotation = Quaternion.Euler(0, 135, 30);
+            yield return null;
+        }
+    }
 }

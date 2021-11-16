@@ -23,9 +23,4 @@ public class UIMng : MonoBehaviour
     {
         target.SendMessage("OnClick");
     }
-
-    static public void Build(int code)
-    {
-        GameObject o = Instantiate(FindObjectOfType<Shop>().shopItems[code].obj);
-    }
 }

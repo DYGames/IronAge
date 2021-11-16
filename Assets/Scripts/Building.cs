@@ -18,4 +18,9 @@ public class Building : MonoBehaviour
                 isPlaceable = false;
         }
     }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }

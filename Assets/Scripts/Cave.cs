@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Cave : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        GetComponent<HPController>().MaxHP = 100;   
     }
 
-    // Update is called once per frame
     void Update()
     {
         

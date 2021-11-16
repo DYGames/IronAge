@@ -65,7 +65,7 @@ public class WaveMng : MonoBehaviour
 
     public IEnumerator Start()
     {
-        Money = 1000;
+        Money = 2000;
         Wave = 1;
         Enemy = 0;
         foreach (var item in waveInfos)
@@ -80,6 +80,7 @@ public class WaveMng : MonoBehaviour
             {
                 GameObject o = Instantiate(enemys[Random.Range(0, enemys.Count - 1)]);
                 o.transform.position = spawnPoints[Random.Range(0, spawnPoints.Count - 1)].transform.position;
+                o.GetComponent<HPController>().MaxHP = Random.Range(1, 3) * item.Difficulty;
             }
             yield return new WaitUntil(() => { return Enemy == 0; });
             Wave++;

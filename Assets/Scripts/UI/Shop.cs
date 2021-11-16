@@ -12,6 +12,7 @@ public class Shop : MonoBehaviour
         public string name;
         public int code;
         public int price;
+        public int HP;
         public GameObject obj;
     }
     public List<ShopItem> shopItems;
@@ -33,8 +34,15 @@ public class Shop : MonoBehaviour
             o.transform.parent = Content;
             o.name = "Shop";
             o.GetComponentInChildren<UnityEngine.UI.Text>().text = item.name + System.Environment.NewLine + item.price.ToString();
-            o.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => {
-                UIMng.Build(item.code);
+            o.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() =>
+            {
+                WaveMng m = FindObjectOfType<WaveMng>();
+                if (m.Money >= item.price)
+                {
+                    m.Money -= item.price;
+                    GameObject o = Instantiate(shopItems[item.code].obj);
+                    o.GetComponent<HPController>().MaxHP = shopItems[item.code].HP;
+                }
             });
         }
         foreach (var item in upgradeItems)
