@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 9137254144823524832}
   - component: {fileID: 9137254144823524833}
   m_Layer: 0
-  m_Name: Enemy_Low
+  m_Name: Enemy_Mid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,7 +194,7 @@ Transform:
   m_GameObject: {fileID: 9137254144823524846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13.7, y: 2.6, z: -21.8}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 1066136474729716453}
   m_Father: {fileID: 0}
