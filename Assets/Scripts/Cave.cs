@@ -9,8 +9,9 @@ public class Cave : MonoBehaviour
         GetComponent<HPController>().MaxHP = 100;   
     }
 
-    void Update()
+    public void Destroy()
     {
-        
+        FindObjectOfType<Ending>().OpenEnding();
+        Destroy(gameObject);
     }
 }

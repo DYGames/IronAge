@@ -28,10 +28,11 @@ public class HPController : MonoBehaviour
         {
             _HP = value;
             if (_HP <= 0)
+            {
                 _HP = 0;
-            HPBar.localScale = new Vector3(1, 1, (float)_HP / MaxHP);
-            if (_HP == 0)
                 gameObject.SendMessage("Destroy");
+            }
+            HPBar.localScale = new Vector3(1, 1, (float)_HP / MaxHP);
         }
     }
     public Transform HPBar;

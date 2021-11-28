@@ -13,6 +13,9 @@ public class Shop : MonoBehaviour
         public int code;
         public int price;
         public int HP;
+        public int Power;
+        public float Speed;
+        public int Defense;
         public GameObject obj;
     }
     public List<ShopItem> shopItems;
@@ -42,6 +45,9 @@ public class Shop : MonoBehaviour
                     m.Money -= item.price;
                     GameObject o = Instantiate(shopItems[item.code].obj);
                     o.GetComponent<HPController>().MaxHP = shopItems[item.code].HP;
+                    o.GetComponent<Building>().Power = shopItems[item.code].Power;
+                    o.GetComponent<Building>().Defense = shopItems[item.code].Defense;
+                    o.GetComponent<Building>().Speed = shopItems[item.code].Speed;
                 }
             });
         }
@@ -51,6 +57,15 @@ public class Shop : MonoBehaviour
             o.transform.parent = Content;
             o.name = "Upgrade";
             o.GetComponentInChildren<UnityEngine.UI.Text>().text = item.name + System.Environment.NewLine + item.price.ToString();
+            o.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() =>
+            {
+                if (item.code == 0)
+                    Upgrade.AttackUpgrade();
+                else if (item.code == 1)
+                    Upgrade.DefenseUpgrade();
+                else if (item.code == 2)
+                    Upgrade.SpeedUpgrade();
+            });
         }
         transform.localScale = new Vector3(0, 1, 1);
     }

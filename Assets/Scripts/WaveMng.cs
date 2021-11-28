@@ -65,7 +65,7 @@ public class WaveMng : MonoBehaviour
 
     public IEnumerator Start()
     {
-        Money = 2000;
+        Money = 10000;
         Wave = 1;
         Enemy = 0;
         foreach (var item in waveInfos)
@@ -84,6 +84,11 @@ public class WaveMng : MonoBehaviour
             }
             yield return new WaitUntil(() => { return Enemy == 0; });
             Wave++;
+            foreach (Building building in FindObjectsOfType<Building>())
+            {
+                HPController hP = building.gameObject.GetComponent<HPController>();
+                hP.MaxHP = hP.MaxHP;
+            }
         }
     }
 }

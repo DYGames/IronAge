@@ -275,7 +275,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4070c812883cda845a72f99adcfb0dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 0
   HPBar: {fileID: 7235153982979585524}
 --- !u!114 &9137254144823524832
 MonoBehaviour:
@@ -290,6 +289,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 3
+  AttackedEffect: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 3}
+  DestroyEffect: {fileID: 1247311384876784, guid: 4adffb0018aeda44e9263f901167af1f, type: 3}
 --- !u!195 &9137254144823524833
 NavMeshAgent:
   m_ObjectHideFlags: 0
