@@ -17,6 +17,13 @@ public class Enemy : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         var cave = FindObjectOfType<Cave>();
+
+        if (StyleTransferManager.instance)
+        {
+            Texture2D texture = StyleTransferManager.instance.generatedTextures[Type];
+            GetComponentInChildren<HeightMapMesh>().SetHeightMap(texture, texture);
+        }
+
         StartCoroutine(Attack());
         while (true)
         {
