@@ -68,6 +68,9 @@ public class WaveMng : MonoBehaviour
         Money = 10000;
         Wave = 1;
         Enemy = 0;
+
+        yield return new WaitUntil(() => GameStart.isGameStart);
+
         foreach (var item in waveInfos)
         {
             for (int i = 0; i <= 5; i++)

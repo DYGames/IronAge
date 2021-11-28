@@ -17,7 +17,7 @@ public class Building : MonoBehaviour
 
     IEnumerator Start()
     {
-        while (Projectile != null)
+        while (Projectile != null && !isPlaceable)
         {
             Transform target = null;
             float d = float.MaxValue;
