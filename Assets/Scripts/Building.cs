@@ -69,5 +69,6 @@ public class Building : MonoBehaviour
     {
         Instantiate(DestroyEffect).transform.position = transform.position;
         Destroy(gameObject);
+        Stat.TowerDetroyed++;
     }
 }

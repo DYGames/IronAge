@@ -39,6 +39,7 @@ public class Projectile : MonoBehaviour
         {
             Instantiate(Effect).transform.position = transform.position;
             e.gameObject.GetComponent<HPController>().HP -= Power;
+            Stat.DmgGiven += Power;
             Destroy(gameObject);
         }
     }

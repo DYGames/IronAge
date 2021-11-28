@@ -34,8 +34,6 @@ public class Enemy : MonoBehaviour
             if (lastTarget == null || lastTarget != target)
             {
                 agent.SetDestination(target.position);
-                Debug.Log(target.position);
-                Debug.Log(agent.destination);
                 lastTarget = target;
             }
             yield return new WaitForSeconds(1);
@@ -57,6 +55,7 @@ public class Enemy : MonoBehaviour
                     target.gameObject.GetComponent<Building>().Attacked();
                 }
                 target.gameObject.GetComponent<HPController>().HP -= Type / d;
+                Stat.DmgTaken += Type / d;
             }
         }
     }
@@ -65,6 +64,8 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(DestroyEffect).transform.position = transform.position;
         Destroy(gameObject);
+        FindObjectOfType<WaveMng>().Money += Type * 100;
         FindObjectOfType<WaveMng>().Enemy--;
+        Stat.EnemyKilled++;
     }
 }
