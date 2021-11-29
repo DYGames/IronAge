@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3da893c23d94546adc0035a2c779a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightMultiplier: 1
-  templateMesh: {fileID: 4711208715938537054, guid: 1ec5236ba6ec92640b558be2dd0dd882, type: 3}
+  heightMin: 0.5
+  heightMax: 1
+  templateMesh: {fileID: -5495902117074765545, guid: 7ae6a262c758c9049ab15de1766419ff, type: 3}
 --- !u!1 &2605285390040709554
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,6 +380,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: 1ec5236ba6ec92640b558be2dd0dd882, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: 7ae6a262c758c9049ab15de1766419ff, type: 3}
     - target: {fileID: 919132149155446097, guid: 1ec5236ba6ec92640b558be2dd0dd882, type: 3}
       propertyPath: m_Name
       value: sphere

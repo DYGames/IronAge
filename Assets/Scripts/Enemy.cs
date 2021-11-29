@@ -13,16 +13,21 @@ public class Enemy : MonoBehaviour
     public GameObject AttackedEffect;
     public GameObject DestroyEffect;
 
+    public void ApplyStyleTransfer()
+    {
+        if (StyleTransferManager.instance)
+        {
+            Texture2D texture = StyleTransferManager.instance.GetEvaluation(Type).resultTexture;
+            GetComponentInChildren<HeightMapMesh>().SetHeightMap(texture, texture);
+        }
+    }
+
     IEnumerator Start()
     {
         agent = GetComponent<NavMeshAgent>();
         var cave = FindObjectOfType<Cave>();
 
-        if (StyleTransferManager.instance)
-        {
-            Texture2D texture = StyleTransferManager.instance.generatedTextures[Type];
-            GetComponentInChildren<HeightMapMesh>().SetHeightMap(texture, texture);
-        }
+        ApplyStyleTransfer();
 
         StartCoroutine(Attack());
         while (true)

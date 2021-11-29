@@ -5,13 +5,11 @@ using UnityEngine.UI;
 
 public class StyleTransferUI : MonoBehaviour
 {
-    public Texture2D[] contentTextures;
-    public Texture2D[] styleTextures;
+    private Texture2D[] contentTextures;
+    private Texture2D[] styleTextures;
 
     public int uiIndex = 0;
-    public UnityEngine.Events.UnityEvent<int, Texture2D> onEvaluate;
-
-    public StyleTransferNetwork network;
+    // public UnityEngine.Events.UnityEvent<int, Texture2D> onEvaluate;
 
     public Dropdown contentDropdown;
     public Dropdown styleDropdown;
@@ -21,15 +19,32 @@ public class StyleTransferUI : MonoBehaviour
 
     public float cooldownSeconds = 1f;
     private float nextCooldown = 0f;
+    private bool shouldEvaluate = false;
+
+    public enum TextureType
+    {
+        Content, Style
+    }
+
+    public void SetTextures(TextureType type, Texture2D[] textures)
+    {
+        switch (type)
+        {
+            case TextureType.Content:
+                contentTextures = textures;
+                UpdateDropdown(contentDropdown, textures);
+                break;
+
+            case TextureType.Style:
+                styleTextures = textures;
+                UpdateDropdown(styleDropdown, textures);
+                break;
+        }
+    }
 
     // Start is called before the first frame update
     IEnumerator Start()
     {
-        if (!network)
-        {
-            network = FindObjectOfType<StyleTransferNetwork>();
-        }
-
         yield return new WaitForEndOfFrame();
 
         UpdateDropdown(contentDropdown, contentTextures);
@@ -45,25 +60,21 @@ public class StyleTransferUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    Texture2D ToTexture2D(RenderTexture rTex)
-    {
-        Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGB24, false);
-        // ReadPixels looks at the active RenderTexture.
-        RenderTexture.active = rTex;
-        tex.ReadPixels(new Rect(0, 0, rTex.width, rTex.height), 0, 0);
-        tex.Apply();
-        return tex;
+        if (shouldEvaluate)
+        {
+            Evaluate();
+        }
     }
 
     public void Evaluate()
     {
         if (Time.time < nextCooldown)
         {
+            shouldEvaluate = true;
             return;
         }
+
+        shouldEvaluate = false;
 
         int contentIndex = contentDropdown.value;
         int styleIndex = styleDropdown.value;
@@ -73,23 +84,27 @@ public class StyleTransferUI : MonoBehaviour
 
         float alphaValue = alphaSlider.value;
 
-        Texture2D resultTexture = ToTexture2D(network.Evaluate(contentTexture, styleTexture, alphaValue));
+        Texture2D resultTexture = StyleTransferManager.instance.Evaluate(uiIndex, contentTexture, styleTexture, alphaValue);
         resultImage.texture = resultTexture;
 
-        onEvaluate.Invoke(uiIndex, resultTexture);
+        // onEvaluate.Invoke(uiIndex, resultTexture);
 
         nextCooldown = Time.time + cooldownSeconds;
     }
 
     void UpdateDropdown(Dropdown dropdown, Texture2D[] textures)
     {
-        dropdown.options.Clear();
+        dropdown.ClearOptions();
+
+        List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
 
         for (int index = 0; index < textures.Length; index++)
         {
             Texture2D texture = textures[index];
             Sprite optionSprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), Vector2.one * 0.5f);
-            dropdown.options.Add(new Dropdown.OptionData(index.ToString(), optionSprite));
+            options.Add(new Dropdown.OptionData(index.ToString(), optionSprite));
         }
+
+        dropdown.AddOptions(options);
     }
 }

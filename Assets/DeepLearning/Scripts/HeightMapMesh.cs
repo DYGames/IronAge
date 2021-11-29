@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class HeightMapMesh : MonoBehaviour
 {
-    public float heightMultiplier = 1f;
+    public float heightMin = 0.5f;
+    public float heightMax = 1f;
 
     public Mesh templateMesh;
 
@@ -29,7 +30,7 @@ public class HeightMapMesh : MonoBehaviour
         {
             Vector2 uv = uvs[index];
             Color texel = heightMap.GetPixelBilinear(uv.x, uv.y);
-            vertices[index] *= texel.grayscale * heightMultiplier;
+            vertices[index] *= heightMin + texel.grayscale * (heightMax - heightMin);
         }
 
         Mesh mesh = new Mesh();

@@ -17,7 +17,8 @@ public class Building : MonoBehaviour
 
     IEnumerator Start()
     {
-        while (Projectile != null && !isPlaceable)
+        yield return new WaitUntil(() => isPlaceable);
+        while (Projectile != null)
         {
             Transform target = null;
             float d = float.MaxValue;

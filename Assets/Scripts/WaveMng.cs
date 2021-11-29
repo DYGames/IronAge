@@ -87,11 +87,45 @@ public class WaveMng : MonoBehaviour
             }
             yield return new WaitUntil(() => { return Enemy == 0; });
             Wave++;
+            RandomizeEnemies(false, true, true);
             foreach (Building building in FindObjectsOfType<Building>())
             {
                 HPController hP = building.gameObject.GetComponent<HPController>();
                 hP.MaxHP = hP.MaxHP;
             }
+        }
+    }
+
+    private void RandomizeEnemies(bool content, bool style, bool alpha)
+    {
+        Texture2D[] contentTextures = StyleTransferManager.instance.contentTextures;
+        Texture2D[] styleTextures = StyleTransferManager.instance.styleTextures;
+
+        for (int index = 0; index < enemys.Count; index++)
+        {
+            var evalutaion = StyleTransferManager.instance.GetEvaluation(index);
+
+            if (content)
+            {
+                evalutaion.contentTexture = contentTextures[Random.Range(0, contentTextures.Length)];
+            }
+
+            if (style)
+            {
+                evalutaion.styleTexture = styleTextures[Random.Range(0, styleTextures.Length)];
+            }
+
+            if (alpha)
+            {
+                evalutaion.alphaValue = Random.value;
+            }
+
+            StyleTransferManager.instance.Evaluate(index, evalutaion.contentTexture, evalutaion.styleTexture, evalutaion.alphaValue);
+        }
+
+        foreach (Enemy enemy in FindObjectsOfType<Enemy>())
+        {
+            enemy.ApplyStyleTransfer();
         }
     }
 }
